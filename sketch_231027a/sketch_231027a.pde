@@ -49,36 +49,35 @@ void setup() {
  MOpen = SDimension*1/10;
  MReset = SDimension/SDimension;
  //
+ rect(backX, backY, backW, backH);
+ ellipse(faceX, faceY, faceD, faceD);
 
 }
 //END setup
 //
 void draw() {
   //DIVs
-  fill(red);
-   measleX = random(0, faceD);
-   measleY = random(0, faceD);
-   measleD = random(SDimension*1/30, SDimension*1/10);
-  ellipse(measleX, measleY, measleD, measleD);
   fill(white);
-  rect(backX, backY, backW, backH);
+  //rect(backX, backY, backW, backH);
   fill(Ygreen);
-  ellipse(faceX, faceY, faceD, faceD);
+  //ellipse(faceX, faceY, faceD, faceD);
+  //
+  color MeasleColor = color(255, random(0, 84), random(0, 100));
+  fill(MeasleColor);
+   measleX = random(backX, faceD + backX);
+   measleY = random(backY, faceD + backY);
+   measleD = random(faceD*1/30, faceD*1/10);
+  noStroke();
+  ellipse(measleX, measleY, measleD, measleD);
+  stroke(1);
+  fill(white);
+  //
   ellipse(EyeIX, EyeIY, EyeD, EyeD); //LeftEye
   ellipse(EyeIIX, EyeIIY, EyeD, EyeD); //RightEye
   triangle(NoseXI, NoseYI, NoseXII, NoseYII, NoseXIII, NoseYIII); //Nose
   strokeWeight(MOpen);
   line(MLXI, MLYI, MLXII, MLYII); //Mouth
   strokeWeight(MReset);
-  color MeasleColor = color(255, random(0, 84), random(0, 100));
-  fill(MeasleColor);
-   measleX = random(faceD*2/4, faceD-1/4);
-   measleY = random(faceY, faceY);
-   measleD = random(faceD*1/30, faceD*1/10);
-  noStroke();
-  ellipse(measleX, measleY, measleD, measleD);
-  stroke(1);
-  fill(white);
   
 }
 //END draw
