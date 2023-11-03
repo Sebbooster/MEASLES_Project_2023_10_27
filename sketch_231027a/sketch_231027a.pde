@@ -10,6 +10,7 @@ float MLXI, MLYI, MLXII, MLYII; //Mouth
 float MOpen, MReset;
 float measleX, measleY, measleD;
 int SDimension;
+float ButtonIX, ButtonIY, ButtonIS;
 //
 void setup() {
  size(600, 400);
@@ -21,7 +22,7 @@ void setup() {
  faceX = appWidth*1/2;
  faceY = appHeight*1/2;
  faceD = SDimension;
- faceR = SDimension*1/2;
+ faceR = faceD*1/2;
  //
  backX = faceX - faceD*1/2;
  backY = faceY - faceD*1/2;
@@ -49,9 +50,13 @@ void setup() {
  MOpen = SDimension*1/10;
  MReset = SDimension/SDimension;
  //
+ ButtonIX = backX;
+ ButtonIY = backY;
+ ButtonIS = SDimension/2-sqrt(sq(SDimension/2)/2);
+ //
  rect(backX, backY, backW, backH);
  ellipse(faceX, faceY, faceD, faceD);
-
+rect(ButtonIX, ButtonIY, ButtonIS, ButtonIS);
 }
 //END setup
 //
@@ -64,9 +69,11 @@ void draw() {
   //
   color MeasleColor = color(255, random(0, 84), random(0, 100));
   fill(MeasleColor);
-   measleX = random(backX, faceD + backX);
-   measleY = random(backY, faceD + backY);
-   measleD = random(faceD*1/30, faceD*1/10);
+   measleX = random(backX+(measleD/2), (backX + backW) - (measleD/2));
+   while ( measleX < ButtonIX+ButtonIS ) measleX = random( backX+(measleD/2), (backX+backW)-(measleD/2) );
+   measleY = random(backY-(measleD/2), (backY + backH)+ (measleD/2));
+   while ( measleY < ButtonIY+ButtonIS ) measleY = random( backY+(measleD/2), (backY+backH)-(measleD/2) );
+   measleD = random(faceD*1/100, faceD*1/25);
   noStroke();
   ellipse(measleX, measleY, measleD, measleD);
   stroke(1);
