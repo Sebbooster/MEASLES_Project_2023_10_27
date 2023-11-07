@@ -1,24 +1,32 @@
 //Global Variables
 int appWidth, appHeight;
 int size, sizeFont;
+int SDimension;
+//
+color Ygreen=#A0E520, white=#FFFFFF, red=#FF0303, Bgreen=#00FF00, orange=#FF810A, yellow=#FFEB0A;
+color HOC=white;
+//
 float faceX, faceY, faceD, faceR;
 float backX, backY, backW, backH;
-color Ygreen=#A0E520, white=#FFFFFF, red=#FF0303, Bgreen=#00FF00, orange=#FF810A, yellow=#FFEB0A;
 float EyeIX, EyeIY, EyeD; //Left
 float EyeIIX, EyeIIY; //Right
 float NoseXI, NoseYI, NoseXII, NoseYII, NoseXIII, NoseYIII; //Nose
 float MLXI, MLYI, MLXII, MLYII; //Mouth
 float MOpen, MReset;
 float measleX, measleY, measleD;
-int SDimension;
 float ButtonIX, ButtonIY, ButtonIIX, ButtonIIY, ButtonIIIX, ButtonIIIY, ButtonS;
+//
 String start="Start", stop="STOP", quit="X";
+//
 PFont base;
+//
+Boolean measlesON=false;
 //
 void setup() {
   //fonts
   base = createFont("Arial", 55);
   //
+ //fullScreen();
  size(600, 400);
  appWidth = width;
  appHeight = height;
@@ -84,17 +92,14 @@ void draw() {
   color MeasleColor = color(255, random(0, 84), random(0, 100));
   fill(MeasleColor);
    measleX = random(backX+(measleD/2), (backX + backW) - (measleD/2));
-   //while ( measleX < ButtonIX+ButtonS ) measleX = random( backX+(measleD/2), (backX+backW)-(measleD/2) );
    measleY = random(backY-(measleD/2), (backY + backH)+ (measleD/2));
-  //while ( measleY < ButtonIY+ButtonS ) measleY = random( backY+(measleD/2), (backY+backH)-(measleD/2) );
    if (measleX <= ButtonIX+ButtonS+(measleD/2) && measleY <= ButtonIY+ButtonS+(measleD/2))  {
-    println("\t\tXhere", measleX, ButtonIX+ButtonS);
     measleX = random( ButtonIX+ButtonS+(measleD/2), (backX+backW)-(measleD/2) );
   }
 
    measleD = random(faceD*1/100, faceD*1/25);
   noStroke();
-  ellipse(measleX, measleY, measleD, measleD);
+  if (measlesON==true) ellipse(measleX, measleY, measleD, measleD);
   stroke(1);
   fill(white);
   //
@@ -106,21 +111,27 @@ void draw() {
   strokeWeight(MReset);
   //
   //Text
-  color hoverOverColor=white;
-  if (mouseX<ButtonIX && mouseX<ButtonIX + ButtonS && mouseY>ButtonIY && mouseY<ButtonIY + ButtonS) { //button 1
-  hoverOverColor = Bgreen;
-  } else if (mouseX<ButtonIIX && mouseX<ButtonIIX + ButtonS && mouseY>ButtonIIY && mouseY<ButtonIIY + ButtonS) {//button 2
-  hoverOverColor = orange;
-  } else if (mouseX<ButtonIIIX && mouseX<ButtonIIIX + ButtonS && mouseY>ButtonIIIY && mouseY<ButtonIIIY + ButtonS) {//button 3
-  hoverOverColor = yellow;
-  } else { //no buttons
-  fill(white);
+ if ( mouseX>ButtonIX && mouseX<ButtonIX+ButtonS && mouseY>ButtonIY && mouseY<ButtonIY+ButtonS ) { //Buton 1
+    HOC = Bgreen;
+    fill( HOC );
+    rect( ButtonIX, ButtonIY, ButtonS, ButtonS );
+    fill( white );
+  } else if ( mouseX>ButtonIIX && mouseX<ButtonIIX+ButtonS && mouseY>ButtonIIY && mouseY<ButtonIIY+ButtonS ) { //Button 2
+    HOC = yellow;
+    fill( HOC );
+    rect( ButtonIIX, ButtonIIY, ButtonS, ButtonS );
+  } else if (  mouseX>ButtonIIIX && mouseX<ButtonIIIX+ButtonS && mouseY>ButtonIIIY && mouseY<ButtonIIIY+ButtonS ) { //button 3
+    HOC = orange;
+    fill( HOC );
+    rect( ButtonIIIX, ButtonIIIY, ButtonS, ButtonS );
+  } else { //No Buttons
+    HOC = white;
+    fill( HOC );
+    rect( ButtonIX, ButtonIY, ButtonS, ButtonS );
+    rect( ButtonIIX, ButtonIIY, ButtonS, ButtonS );
+    rect( ButtonIIIX, ButtonIIIY, ButtonS, ButtonS );
   }
-  rect(ButtonIX, ButtonIY, ButtonS, ButtonS);
-  rect(ButtonIIX, ButtonIIY, ButtonS, ButtonS);
-  rect(ButtonIIIX, ButtonIIIY, ButtonS, ButtonS);
-  fill(white);
-  
+  //
   fill(Ygreen); //ink
   noFill();
   textAlign(CENTER, CENTER);
@@ -149,11 +160,17 @@ void draw() {
 //END draw
 //
 void keyPressed() {
-
+if(key==' ') measlesON=true; // START
+if(keyCode==BACKSPACE) measlesON=false; //STOP
+if(keyCode==ESC) exit(); //QUIT
 }
 //END keyPressed
 //
 void mousePressed() {
+
+if(mouseX>ButtonIX && mouseX<ButtonIX+ButtonS && mouseY>ButtonIY && mouseY<ButtonIY+ButtonS) measlesON=true; //START
+if(mouseX>ButtonIIX && mouseX<ButtonIIX+ButtonS && mouseY>ButtonIIY && mouseY<ButtonIIY+ButtonS) measlesON=false; //STOP
+if(mouseX>ButtonIIIX && mouseX<ButtonIIIX+ButtonS && mouseY>ButtonIIIY && mouseY<ButtonIIIY+ButtonS) exit(); //QUIT
 
 }
 //END mousePressed
