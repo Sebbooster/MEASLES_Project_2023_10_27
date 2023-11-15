@@ -99,7 +99,9 @@ void draw() {
 
    measleD = random(faceD*1/100, faceD*1/25);
   noStroke();
-  if (measlesON==true) ellipse(measleX, measleY, measleD, measleD);
+  if ( ((measleX-faceX)*(measleX-faceX))+((measleY-faceY)*(measleY-faceY)) < sq( ((faceD/2)-(measleD/2)) ) ) { //Measle on Circle
+    if ( measlesON==true ) ellipse( measleX, measleY, measleD, measleD );
+  }
   stroke(1);
   fill(white);
   //
